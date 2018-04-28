@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.io.IOException; 
 
-public class and extends PApplet {
+public class singlelayer extends PApplet {
 
 PFont HIRAGINO10;
 PFont HIRAGINO20;
@@ -152,7 +152,7 @@ class Perceptron {
 }
   public void settings() {  size(500, 500, P2D);  smooth(); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "and" };
+    String[] appletArgs = new String[] { "singlelayer" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
