@@ -39,7 +39,7 @@ void draw() {
 }
 
 void drawPerceptron(float x1, float x2, float size) {
-  if (PERCEPTRON.run(x1, x2)) {
+  if (PERCEPTRON.run(x1, x2) > 0) {
     fill(COLOR_TRUE);
   } else {
     fill(COLOR_FALSE);

@@ -55,7 +55,7 @@ public void draw() {
 }
 
 public void drawPerceptron(float x1, float x2, float size) {
-  if (PERCEPTRON.run(x1, x2)) {
+  if (PERCEPTRON.run(x1, x2) > 0) {
     fill(COLOR_TRUE);
   } else {
     fill(COLOR_FALSE);
@@ -136,11 +136,8 @@ class Perceptron {
     this.threshold = threshold;
   }
 
-  public boolean run(float x1, float x2) {
-    if (weight1 * x1 + weight2 * x2 <= threshold) {
-      return false;
-    }
-    return true;
+  public float run(float x1, float x2) {
+    return weight1 * x1 + weight2 * x2 - threshold;
   }
 
   public void weight1(float weight1) { this.weight1 = weight1; }
