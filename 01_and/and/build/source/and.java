@@ -21,6 +21,9 @@ float MAX = 5;
 float SCALE = 1;
 int COLOR_TRUE = 0xffCCFF90;
 int COLOR_FALSE = 0xffFF8A80;
+String MOUSE_X_ASSIGN = "weight1";
+String MOUSE_Y_ASSIGN = "weight2";
+int MOUSE_MODE = 0;
 
 public void setup() {
   
@@ -35,11 +38,11 @@ public void setup() {
 
 public void draw() {
   translate(width / 2, height / 2);
-  for (int i = 0; i < 5000; i++) {
+  for (int i = 0; i < 10000; i++) {
     float x1 = random(-MAX, MAX);
     float x2 = random(-MAX, MAX);
     noStroke();
-    drawPerceptron(x1, x2, 1);
+    drawPerceptron(x1, x2, 2);
   }
   drawAxis();
   stroke(150);
@@ -79,11 +82,48 @@ public void drawParameters() {
   text("weight1: " + PERCEPTRON.weight1(), 5, 20);
   text("weight2: " + PERCEPTRON.weight2(), 5, 35);
   text("threshold: " + PERCEPTRON.threshold(), 5, 50);
+  text("mouseX assign: " + MOUSE_X_ASSIGN, 5, 70);
+  text("mouseY assign: " + MOUSE_Y_ASSIGN, 5, 85);
+}
+
+public void mouseMoved() {
+  switch (MOUSE_X_ASSIGN) {
+    case "weight1":
+      PERCEPTRON.weight1(5 * (mouseX - width / 2) / PApplet.parseFloat(width));
+      break;
+    case "threshold":
+      PERCEPTRON.threshold(5 * (mouseX - width / 2) / PApplet.parseFloat(width));
+      break;
+    default:
+      break;
+  }
+  switch (MOUSE_Y_ASSIGN) {
+    case "weight2":
+      PERCEPTRON.weight2(-5 * (mouseY - height / 2) / PApplet.parseFloat(height));
+      break;
+    default:
+      break;
+  }
 }
 
 public void keyPressed() {
-  if (key == ' ') {
-    background(255);
+  switch (key) {
+    case ' ':
+      background(255);
+      break;
+    case 'c':
+      if (MOUSE_MODE == 0) {
+        MOUSE_X_ASSIGN = "threshold";
+        MOUSE_Y_ASSIGN = "undefined";
+        MOUSE_MODE = 1;
+      } else if (MOUSE_MODE == 1) {
+        MOUSE_X_ASSIGN = "weight1";
+        MOUSE_Y_ASSIGN = "weight2";
+        MOUSE_MODE = 0;
+      }
+      break;
+    default:
+      break;
   }
 }
 class Perceptron {
@@ -103,6 +143,8 @@ class Perceptron {
     return true;
   }
 
+  public void weight1(float weight1) { this.weight1 = weight1; }
+  public void weight2(float weight2) { this.weight2 = weight2; }
   public void threshold(float threshold) { this.threshold = threshold; }
   public float weight1() { return weight1; }
   public float weight2() { return weight2; }

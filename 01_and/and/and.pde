@@ -5,6 +5,9 @@ float MAX = 5;
 float SCALE = 1;
 color COLOR_TRUE = #CCFF90;
 color COLOR_FALSE = #FF8A80;
+String MOUSE_X_ASSIGN = "weight1";
+String MOUSE_Y_ASSIGN = "weight2";
+int MOUSE_MODE = 0;
 
 void setup() {
   size(500, 500, P2D);
@@ -19,11 +22,11 @@ void setup() {
 
 void draw() {
   translate(width / 2, height / 2);
-  for (int i = 0; i < 5000; i++) {
+  for (int i = 0; i < 10000; i++) {
     float x1 = random(-MAX, MAX);
     float x2 = random(-MAX, MAX);
     noStroke();
-    drawPerceptron(x1, x2, 1);
+    drawPerceptron(x1, x2, 2);
   }
   drawAxis();
   stroke(150);
@@ -63,10 +66,47 @@ void drawParameters() {
   text("weight1: " + PERCEPTRON.weight1(), 5, 20);
   text("weight2: " + PERCEPTRON.weight2(), 5, 35);
   text("threshold: " + PERCEPTRON.threshold(), 5, 50);
+  text("mouseX assign: " + MOUSE_X_ASSIGN, 5, 70);
+  text("mouseY assign: " + MOUSE_Y_ASSIGN, 5, 85);
+}
+
+void mouseMoved() {
+  switch (MOUSE_X_ASSIGN) {
+    case "weight1":
+      PERCEPTRON.weight1(5 * (mouseX - width / 2) / float(width));
+      break;
+    case "threshold":
+      PERCEPTRON.threshold(5 * (mouseX - width / 2) / float(width));
+      break;
+    default:
+      break;
+  }
+  switch (MOUSE_Y_ASSIGN) {
+    case "weight2":
+      PERCEPTRON.weight2(-5 * (mouseY - height / 2) / float(height));
+      break;
+    default:
+      break;
+  }
 }
 
 void keyPressed() {
-  if (key == ' ') {
-    background(255);
+  switch (key) {
+    case ' ':
+      background(255);
+      break;
+    case 'c':
+      if (MOUSE_MODE == 0) {
+        MOUSE_X_ASSIGN = "threshold";
+        MOUSE_Y_ASSIGN = "undefined";
+        MOUSE_MODE = 1;
+      } else if (MOUSE_MODE == 1) {
+        MOUSE_X_ASSIGN = "weight1";
+        MOUSE_Y_ASSIGN = "weight2";
+        MOUSE_MODE = 0;
+      }
+      break;
+    default:
+      break;
   }
 }
