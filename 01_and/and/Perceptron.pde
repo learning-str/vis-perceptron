@@ -16,4 +16,7 @@ class Perceptron {
   }
 
   void threshold(float threshold) { this.threshold = threshold; }
+  float weight1() { return weight1; }
+  float weight2() { return weight2; }
+  float threshold() { return threshold; }
 }
